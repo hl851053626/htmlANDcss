@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>鼠标光标渐变跟踪</title>
+</head>
+<style>
+  .mouse-hover-gradient-tracking{
+    position: relative;
+    background: #7983ff;
+    padding: 8px 16px;
+    font-size: 19.2px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    outline: none;
+    overflow: hidden;
+  }
+  .mouse-hover-gradient-tracking span{
+    position: relative;
+  }
+  .mouse-hover-gradient-tracking::before{
+    --size: 0;
+    content: '';
+    position: absolute;
+    left: var(--x);
+    top:var(--y);
+    width:var(--size);
+    height:var(--size);
+    background: radial-gradient(circle closest-side, red, transparent);
+    transform: translate(-50%, -50%);
+    transition: width 0.4s ease, height 0.4s ease;
+  }
+  .mouse-hover-gradient-tracking:hover::before {
+    --size: 200px;
+  }
+</style>
+<body>
+  <button class="mouse-hover-gradient-tracking">
+    <span>Hover Me</span>
+  </button>
+</body>
+</html>
+<script>
+  var btn = document.querySelector('.mouse-hover-gradient-tracking')
+  btn.onmousemove = function(e) {
+    var x = e.pageX - btn.offsetLeft
+    var y = e.pageY - btn.offsetTop
+    btn.style.setProperty('--x', x + 'px')
+    btn.style.setProperty('--y', y + 'px')
+  }
+</script>
